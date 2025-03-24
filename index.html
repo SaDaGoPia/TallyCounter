@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tally counter</title>
+
+    <!-- CONEXION CSS -->
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <!-- CONEXION JS -->
+    <script src="/index.js"></script>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div id="contMain">
+        <!-- TITULO PRINCIPAL -->
+        <h1 id="tituloPrincipal">
+            Tally counter
+        </h1>
+
+        <!-- CONTENEDOR DE LOS BOTONES-->
+        <div id="contBtns">
+            <button id="btnAdd" onclick="addTally()">Add</button>
+            <h2 id="counter">0</h2>
+            <button id="btnDel" onclick="delTally()">Delete</button>
+        </div>
+
+        <!-- CONTENEDOR DE LOS TALLYS-->
+        <ul id="contTallys">
+        </ul>
+
+    </div>
+
+    
+</body>
+</html>
