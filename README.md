@@ -71,14 +71,14 @@ This project provides an interactive tally counting experience with:
 
 ## Screenshots
 
-Place screenshots in `docs/images` using:
-- `desktop-view.png`
-- `mobile-view.png`
+Screenshots are stored in `assets/images`:
+- `desktopView.png`
+- `mobileView.png`
 
 Then they will be rendered here:
 
-![Desktop view](docs/images/desktop-view.png)
-![Mobile view](docs/images/mobile-view.png)
+![Desktop view](assets/images/desktopView.png)
+![Mobile view](assets/images/mobileView.png)
 
 ## Roadmap
 
