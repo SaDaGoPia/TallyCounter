@@ -1,0 +1,615 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Base layout */
+body {
+    min-height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(to bottom, var(--bg-start), var(--bg-end));
+    background-attachment: fixed;
+    scroll-behavior: smooth;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: background-image 220ms ease, color 220ms ease;
+}
+
+#settingsToggleButton {
+    position: fixed;
+    top: 0.9rem;
+    right: 0.9rem;
+    z-index: 35;
+    background-color: var(--button-positive);
+}
+
+#settingsPanel {
+    position: fixed;
+    top: 3.9rem;
+    right: 0.9rem;
+    width: min(360px, calc(100vw - 1.8rem));
+    padding: 1rem;
+    border-radius: 14px;
+    background: var(--settings-bg);
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.38);
+    z-index: 34;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease;
+}
+
+#settingsPanel[hidden] {
+    display: none;
+}
+
+#settingsPanel.is-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+#settingsPanel.is-closing {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    pointer-events: none;
+}
+
+#settingsTitle {
+    margin: 0;
+    color: var(--text-accent);
+    font-size: 1.25rem;
+}
+
+.settingsGroup {
+    border-radius: 12px;
+    background: var(--surface-soft);
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.settingsGroup h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.settingHint {
+    margin: 0;
+    font-size: 0.86rem;
+    opacity: 0.86;
+}
+
+#themeSwitchRow,
+#groupSizeRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.55rem;
+}
+
+#groupSizeInput {
+    flex: 1;
+}
+
+#groupSizeValue {
+    min-width: 1.5rem;
+    text-align: center;
+    font-weight: 800;
+}
+
+#languageSelect {
+    border-radius: 10px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    padding: 0.45rem 0.5rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    border-radius: 999px;
+    transition: 0.2s ease;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.2s ease;
+}
+
+.switch input:checked + .slider {
+    background-color: var(--button-positive);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(22px);
+}
+
+:root {
+    --text-accent: #D9946C;
+    --text-primary: beige;
+    --button-positive: #67918C;
+    --button-negative: #BD5450;
+    --panel-bg: rgba(255, 255, 255, 0.05);
+    --bg-start: #200b03;
+    --bg-end: #040b0d;
+    --surface-soft: rgba(0, 0, 0, 0.25);
+    --input-bg: rgba(0, 0, 0, 0.25);
+    --input-border: rgba(255, 255, 255, 0.3);
+    --notice-bg: rgba(10, 10, 10, 0.92);
+    --settings-bg: rgba(15, 20, 24, 0.96);
+    --group-size: 5;
+}
+
+:root[data-theme="light"] {
+    --text-accent: #894f37;
+    --text-primary: #1f1f1f;
+    --button-positive: #4f7a74;
+    --button-negative: #a44945;
+    --panel-bg: rgba(255, 255, 255, 0.88);
+    --bg-start: #f4ece8;
+    --bg-end: #e5e9ec;
+    --surface-soft: rgba(189, 184, 180, 0.32);
+    --input-bg: rgba(255, 255, 255, 0.85);
+    --input-border: rgba(36, 36, 36, 0.35);
+    --notice-bg: rgba(255, 255, 255, 0.96);
+    --settings-bg: rgba(255, 255, 255, 0.97);
+}
+
+#appContainer {
+    width: min(1000px, 92vw);
+    margin: 2.5rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#mainTitle {
+    margin: 0;
+    color: var(--text-accent);
+    font-weight: 700;
+    font-size: clamp(2rem, 7vw, 4.25rem);
+    text-align: center;
+}
+
+#activeCounterSection,
+#countersSection {
+    border-radius: 20px;
+    background-color: var(--panel-bg);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.45);
+    padding: 1.25rem;
+}
+
+#activeCounterHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#activeCounterName {
+    margin: 0;
+    font-size: clamp(1.2rem, 2.3vw, 1.8rem);
+}
+
+#activeCounterValue {
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-weight: 900;
+}
+
+.actionsRow {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+#singleActions {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+#singleActions #addOneButton {
+    justify-self: start;
+}
+
+#singleActions #deleteOneButton {
+    justify-self: end;
+}
+
+#singleActions #activeCounterValue {
+    justify-self: center;
+}
+
+#bulkAmountLabel {
+    text-align: center;
+}
+
+#bulkControlsRow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+#bulkControlsRow #addBulkButton {
+    justify-self: start;
+}
+
+#bulkControlsRow #deleteBulkButton {
+    justify-self: end;
+}
+
+#bulkControlsRow #bulkAmountInput {
+    justify-self: center;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    border: none;
+    border-radius: 999px;
+    color: var(--text-primary);
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.75;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+#addOneButton,
+#addBulkButton,
+#createCounterButton,
+.pin-button {
+    background-color: var(--button-positive);
+}
+
+#addOneButton,
+#addBulkButton {
+    font-size: 1.4rem;
+    padding: 0.84rem 1.4rem;
+}
+
+#deleteOneButton,
+#deleteBulkButton {
+    background-color: var(--button-negative);
+}
+
+#bulkAmountInput {
+    width: 100px;
+    border-radius: 10px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
+
+#activeTallyList {
+    margin: 1.2rem 0 0;
+    min-height: 130px;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+}
+
+.tally-group {
+    min-height: 100px;
+    padding: 0.6rem;
+    border-radius: 14px;
+    background: var(--surface-soft);
+    display: grid;
+    grid-template-columns: repeat(var(--group-size), minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    gap: 0.28rem;
+}
+
+.tally-group.group-enter {
+    animation: groupEnter 360ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.tally-group.group-exit {
+    animation: groupExit 320ms cubic-bezier(0.55, 0.06, 0.68, 0.19) both;
+}
+
+@keyframes groupEnter {
+    from {
+        opacity: 0;
+        transform: translateX(-24px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes groupExit {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-24px) scale(0.98);
+    }
+}
+
+.tally-mark {
+    height: 70px;
+    width: min(17px, 100%);
+    background-color: #D97C2B;
+    border-radius: 8px;
+}
+
+#countersHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+#countersHeader h3 {
+    margin: 0;
+}
+
+#countersHint {
+    margin: 0.7rem 0;
+    opacity: 0.85;
+}
+
+#countersList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.counter-item {
+    border-radius: 14px;
+    background: var(--surface-soft);
+    padding: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.counter-info {
+    font-size: 1rem;
+}
+
+#storageNotice {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    width: min(420px, calc(100vw - 2rem));
+    border-radius: 14px;
+    background: var(--notice-bg);
+    color: var(--text-primary);
+    padding: 1rem;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 30;
+}
+
+#storageNotice p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+#acknowledgeStorageButton {
+    align-self: flex-start;
+    color: #000;
+}
+
+#storageNotice.notice-dismiss {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 220ms ease, transform 220ms ease;
+}
+
+/* PC (desktop and large screens) */
+@media (min-width: 1025px) {
+    #appContainer {
+        width: min(1100px, 90vw);
+    }
+
+    #activeTallyList {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    button {
+        min-height: 44px;
+    }
+
+    #settingsPanel {
+        width: min(380px, calc(100vw - 1.8rem));
+    }
+}
+
+/* Tablet (portrait and landscape) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #appContainer {
+        width: min(940px, 94vw);
+        margin: 1.8rem auto;
+    }
+
+    #mainTitle {
+        font-size: clamp(2.1rem, 6vw, 3.5rem);
+    }
+
+    #activeCounterSection,
+    #countersSection {
+        padding: 1.1rem;
+    }
+
+    #singleActions,
+    #bulkControlsRow {
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    button {
+        min-height: 44px;
+        font-size: 0.95rem;
+    }
+
+    #activeTallyList {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.65rem;
+    }
+
+    .tally-group {
+        min-height: 92px;
+    }
+
+    .tally-mark {
+        height: 62px;
+        width: 15px;
+    }
+
+    #storageNotice {
+        width: min(380px, calc(100vw - 2rem));
+    }
+
+    #settingsPanel {
+        width: min(350px, calc(100vw - 1.8rem));
+    }
+}
+
+/* Smartphone */
+@media (max-width: 767px) {
+    #appContainer {
+        width: 94vw;
+        margin: 1rem auto 1.5rem;
+        gap: 1rem;
+    }
+
+    #mainTitle {
+        font-size: clamp(1.9rem, 10vw, 2.7rem);
+    }
+
+    #activeCounterSection,
+    #countersSection {
+        padding: 1rem;
+        border-radius: 16px;
+    }
+
+    #singleActions,
+    #bulkControlsRow {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 0.55rem;
+    }
+
+    #singleActions #addOneButton,
+    #singleActions #deleteOneButton,
+    #bulkControlsRow #addBulkButton,
+    #bulkControlsRow #deleteBulkButton {
+        justify-self: center;
+        width: min(280px, 100%);
+    }
+
+    #activeCounterValue {
+        font-size: clamp(2rem, 8vw, 2.3rem);
+    }
+
+    #bulkAmountInput {
+        width: 120px;
+        text-align: center;
+    }
+
+    button {
+        min-height: 46px;
+        font-size: 0.98rem;
+        padding: 0.65rem 1rem;
+    }
+
+    #activeTallyList {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.55rem;
+    }
+
+    .tally-group {
+        min-height: 86px;
+        padding: 0.5rem;
+    }
+
+    .tally-mark {
+        height: 56px;
+        width: 14px;
+    }
+
+    #countersHeader,
+    .counter-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #storageNotice {
+        left: 0.7rem;
+        right: 0.7rem;
+        bottom: 0.7rem;
+        width: auto;
+    }
+
+    #settingsToggleButton {
+        top: 0.7rem;
+        right: 0.7rem;
+    }
+
+    #settingsPanel {
+        top: 3.45rem;
+        left: 0.7rem;
+        right: 0.7rem;
+        width: auto;
+    }
+}

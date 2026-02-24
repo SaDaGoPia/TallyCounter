@@ -1,0 +1,93 @@
+|<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tally Counter</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <button id="settingsToggleButton" type="button" aria-expanded="false" aria-controls="settingsPanel">Settings</button>
+
+    <aside id="settingsPanel" aria-label="Application settings" hidden>
+        <h2 id="settingsTitle">Settings</h2>
+
+        <section class="settingsGroup" aria-labelledby="themeSettingTitle">
+            <h3 id="themeSettingTitle">Theme</h3>
+            <div id="themeSwitchRow">
+                <span>Dark</span>
+                <label class="switch" for="themeSliderInput">
+                    <input id="themeSliderInput" type="checkbox" aria-label="Toggle light theme">
+                    <span class="slider"></span>
+                </label>
+                <span>Light</span>
+            </div>
+        </section>
+
+        <section class="settingsGroup" aria-labelledby="groupSettingTitle">
+            <h3 id="groupSettingTitle">Tallies per group</h3>
+            <p class="settingHint">Select from 2 to 10 tally marks per group.</p>
+            <div id="groupSizeRow">
+                <input id="groupSizeInput" type="range" min="2" max="10" step="1" value="5" aria-label="Tallies per group">
+                <span id="groupSizeValue">5</span>
+            </div>
+        </section>
+
+        <section class="settingsGroup" aria-labelledby="languageSettingTitle">
+            <h3 id="languageSettingTitle">Language</h3>
+            <select id="languageSelect" aria-label="Language selector">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+            </select>
+            <p class="settingHint">Language translation section prepared for next iteration.</p>
+        </section>
+    </aside>
+
+    <main id="appContainer">
+        <h1 id="mainTitle">Tally Counter</h1>
+
+        <section id="activeCounterSection">
+            <div id="activeCounterHeader">
+                <h2 id="activeCounterName">Counter 1</h2>
+            </div>
+
+            <div id="singleActions" class="actionsRow">
+                <button id="addOneButton" type="button">Add 1</button>
+                <span id="activeCounterValue">0</span>
+                <button id="deleteOneButton" type="button">Delete 1</button>
+            </div>
+
+            <div id="bulkActions" class="actionsRow">
+                <label for="bulkAmountInput" id="bulkAmountLabel">Bulk amount</label>
+                <div id="bulkControlsRow">
+                    <button id="addBulkButton" type="button">Add amount</button>
+                    <input id="bulkAmountInput" type="number" min="1" max="50" value="5">
+                    <button id="deleteBulkButton" type="button">Delete amount</button>
+                </div>
+            </div>
+
+            <ul id="activeTallyList" aria-label="Active counter tally marks"></ul>
+        </section>
+
+        <section id="countersSection">
+            <div id="countersHeader">
+                <h3>Counters</h3>
+                <button id="createCounterButton" type="button">Create counter</button>
+            </div>
+
+            <p id="countersHint">You can create and pin up to 3 counters. At least one counter always exists.</p>
+            <ul id="countersList" aria-label="Available counters"></ul>
+        </section>
+    </main>
+
+    <aside id="storageNotice" role="dialog" aria-live="polite" aria-label="Storage notice" hidden>
+        <p>
+            This app stores your counters locally on your device to keep your progress between visits.
+            No tracking cookies are used.
+        </p>
+        <button id="acknowledgeStorageButton" type="button">Understood</button>
+    </aside>
+
+    <script src="index.js"></script>
+</body>
+</html>
